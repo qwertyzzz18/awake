@@ -19,6 +19,7 @@ from awake.database import Database
 from awake.disasm import Z80Disasm
 from awake.flow import ProcedureFlowCache
 from awake.rom import Rom
+from awake.graph import save_dot
 
 class Project(object):
     def __init__(self, filename):
@@ -27,7 +28,7 @@ class Project(object):
         self.database = Database(self.filenameBase()+'.awakedb')
         self.disasm = Z80Disasm(self)
         self.flow = ProcedureFlowCache(self)
-
+        save_dot(self.database, set(self.database.getAll()))
     def filenameBase(self):
         return os.path.splitext(self.filename)[0]
 
